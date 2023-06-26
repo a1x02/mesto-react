@@ -5,7 +5,6 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import card from "./Card";
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
@@ -13,6 +12,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
     const [selectedCard, setSelectedCard] = React.useState(null)
     const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false)
+    const [isPopupConfirmationOpen, setIsPopupConfirmationOpen] = React.useState(false)
 
     function handleCardClick(card) {
         setSelectedCard(card)
@@ -31,12 +31,17 @@ function App() {
         setIsAddPlacePopupOpen(true)
     }
 
+    function handleDeleteCardClick(card) {
+        setIsPopupConfirmationOpen(true)
+    }
+
     function closeAllPopups() {
         setSelectedCard(null)
         setIsEditProfilePopupOpen(false)
         setIsEditAvatarPopupOpen(false)
         setIsAddPlacePopupOpen(false)
         setIsImagePopupOpen(false)
+        setIsPopupConfirmationOpen(false)
     }
 
     return (
@@ -47,6 +52,7 @@ function App() {
                 onEditAvatar={handleEditAvatarClick}
                 onAddPlace={handleAddPlaceClick}
                 onCardClick={handleCardClick}
+                onDeleteCardClick={handleDeleteCardClick}
             />
             <Footer/>
             <PopupWithForm
@@ -68,6 +74,7 @@ function App() {
                                    placeholder="Вид деятельности" required minLength="2" maxLength="200"></input>
                             <span className="popup__input-error description-input-error"></span>
                         </label>
+                        <button className="popup__save-button popup__save-button_inactive" type="submit">Сохранить</button>
                     </>
                 }
             />
@@ -89,6 +96,7 @@ function App() {
                                    placeholder="Ссылка на картинку" name="description" type="url" required></input>
                             <span className="popup__input-error link-input-error"></span>
                         </label>
+                        <button className="popup__save-button popup__save-button_inactive" type="submit">Сохранить</button>
                     </>
                 }
             />
@@ -103,6 +111,7 @@ function App() {
                                id="avatar-input" type="url"
                                placeholder="Ссылка на аватар" required value=""></input>
                         <span className="popup__input-error avatar-input-error"></span>
+                        <button className="popup__save-button popup__save-button_inactive" type="submit">Сохранить</button>
                     </>
                 }
             />
@@ -113,30 +122,17 @@ function App() {
                 isOpen={isImagePopupOpen}
             />
 
-            <section className="popup" id="popup-confirmation">
-                <div className="popup__container popup__container_delete-card">
-                    <button type="button" className="popup__close"></button>
-                    <form className="popup__form">
-                        <h2 className="popup__title">Вы уверены?</h2>
+            <PopupWithForm
+                name="confirmation"
+                title="Вы уверены?"
+                isOpen={isPopupConfirmationOpen}
+                onClose={closeAllPopups}
+                children={
+                    <>
                         <button type="submit" className="popup__save-button popup__save-button_delete-card">Да</button>
-                    </form>
-                </div>
-            </section>
-            <template id="element-template">
-                <div className="element">
-                    <img className="element__image"
-                         src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
-                         alt="Архыз"></img>
-                    <div className="element__description">
-                        <h2 className="element__title"></h2>
-                        <div className="element__like">
-                            <button className="element__like-button" type="button"></button>
-                            <h3 className="element__like-counter"></h3>
-                        </div>
-                        <button className="delete-button" type="button"></button>
-                    </div>
-                </div>
-            </template>
+                    </>
+                }
+            />
         </div>
     );
 }
