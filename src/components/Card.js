@@ -5,7 +5,6 @@ function Card(props) {
     const currentUser = React.useContext(CurrentUserContext)
     const isOwn = props.card.owner._id === currentUser._id
     const isLiked = props.card.likes.some((like) => like._id === currentUser._id)
-    const [likesCount, setLikesCount] = React.useState(props.card.likes.length);
     const cardLikeButtonClassName = (
         `element__like-button ${isLiked && 'element__like-button_active'}`
     )
@@ -32,7 +31,7 @@ function Card(props) {
                 <h2 className="element__title">{props.card.name}</h2>
                 <div className="element__like">
                     <button className={cardLikeButtonClassName} type="button" onClick={handleLikeClick}></button>
-                    <h3 className="element__like-counter">{likesCount}</h3>
+                    <h3 className="element__like-counter">{props.card.likes.length}</h3>
                 </div>
                 {isOwn && <button className="delete-button" type="button" onClick={handleDeleteClick}></button>}
             </div>

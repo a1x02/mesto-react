@@ -7,6 +7,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import { api } from "../utils/api.js"
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
@@ -17,6 +18,9 @@ function App() {
     const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false)
     const [isPopupConfirmationOpen, setIsPopupConfirmationOpen] = React.useState(false)
     const [currentUser, setCurrentUser] = React.useState(null)
+    if (currentUser) {
+        console.log(currentUser.name)
+    }
 
     React.useEffect(() => {
         api.getUserInfo()
@@ -62,6 +66,18 @@ function App() {
             .catch((err) => console.log(err))
     }
 
+    function handleUpdateUser({name, about}) {
+        api
+            .patchUserInfo({name, about})
+            .then((userData) => {
+                setCurrentUser(userData)
+                closeAllPopups()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
     function closeAllPopups() {
         setSelectedCard(null)
         setIsEditProfilePopupOpen(false)
@@ -88,30 +104,15 @@ function App() {
                     onCardLike={handleCardLike}
                     cards={cards}
                     setCards={setCards}
+                    currentUser={currentUser}
                 />
                 <Footer/>
-                <PopupWithForm
-                    name="edit"
-                    title="Редактировать профиль"
+                <EditProfilePopup
                     isOpen={isEditProfilePopupOpen}
                     onClose={closeAllPopups}
-                    children={
-                        <>
-                            <label className="popup__label">
-                                <input className="popup__input popup__input_subject_name" id="name-input" name="name"
-                                       placeholder="Имя"
-                                       required minLength="2" maxLength="40"></input>
-                                <span className="popup__input-error name-input-error"></span>
-                            </label>
-                            <label className="popup__label">
-                                <input className="popup__input popup__input_subject_description" id="description-input"
-                                       name="description"
-                                       placeholder="Вид деятельности" required minLength="2" maxLength="200"></input>
-                                <span className="popup__input-error description-input-error"></span>
-                            </label>
-                            <button className="popup__save-button popup__save-button_inactive" type="submit">Сохранить</button>
-                        </>
-                    }
+                    onUpdateUser={handleUpdateUser}
+                    name={currentUser.name}
+                    about={currentUser.about}
                 />
                 <PopupWithForm
                     name="add"
