@@ -7,7 +7,8 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import { api } from "../utils/api.js"
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
-import EditProfilePopup from "./EditProfilePopup";
+import EditProfilePopup from "./EditProfilePopup.js";
+import EditAvatarPopup from "./EditAvatarPopup.js"
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
@@ -18,9 +19,6 @@ function App() {
     const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false)
     const [isPopupConfirmationOpen, setIsPopupConfirmationOpen] = React.useState(false)
     const [currentUser, setCurrentUser] = React.useState(null)
-    if (currentUser) {
-        console.log(currentUser.name)
-    }
 
     React.useEffect(() => {
         api.getUserInfo()
@@ -136,20 +134,9 @@ function App() {
                         </>
                     }
                 />
-                <PopupWithForm
-                    name="avatar"
-                    title="Обновить аватар"
+                <EditAvatarPopup
                     isOpen={isEditAvatarPopupOpen}
                     onClose={closeAllPopups}
-                    children={
-                        <>
-                            <input className="popup__input popup__input_subject_avatar" name="input-avatar"
-                                   id="avatar-input" type="url"
-                                   placeholder="Ссылка на аватар" required value=""></input>
-                            <span className="popup__input-error avatar-input-error"></span>
-                            <button className="popup__save-button popup__save-button_inactive" type="submit">Сохранить</button>
-                        </>
-                    }
                 />
 
                 <ImagePopup
