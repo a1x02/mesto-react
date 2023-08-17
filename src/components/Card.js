@@ -21,7 +21,7 @@ function Card(props) {
     }
 
     return (
-        <div className="element" key={props.card._id}>
+        <div className="element">
             <img className="element__image"
                  src={props.card.link}
                  alt={props.card.name}

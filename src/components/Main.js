@@ -9,15 +9,15 @@ function Main(props) {
     // const [cards, setCards] = React.useState([])
     const currentUser = React.useContext(CurrentUserContext)
 
-    React.useEffect(() => {
-        api.getInitialCards()
-            .then((response) => {
-                props.setCards(response)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [])
+    // React.useEffect(() => {
+    //     api.getInitialCards()
+    //         .then((response) => {
+    //             props.setCards(response)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         })
+    // }, [])
 
     return (
         <main className="content">
@@ -40,8 +40,8 @@ function Main(props) {
                     <Card
                         key={card._id}
                         card={card}
-                        onCardClick={() => props.onCardClick(card)}
-                        onDeleteCardClick={() => props.onDeleteCardClick(card)}
+                        onCardClick={props.onCardClick}
+                        onDeleteCardClick={props.onDeleteCardClick}
                         onCardLike={props.onCardLike}
                         onCardDelete={props.onCardDelete}
                     />
