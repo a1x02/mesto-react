@@ -49,7 +49,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
                            placeholder="Ссылка на картинку" name="description" type="url" required></input>
                     <span className="popup__input-error link-input-error"></span>
                 </label>
-                <button className="popup__save-button popup__save-button_inactive" type="submit">Сохранить</button>
+                <button className="popup__save-button" type="submit">Сохранить</button>
             </>
         }
         />

@@ -29,7 +29,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
                            id="avatar-input" type="url"
                            placeholder="Ссылка на аватар" required></input>
                     <span className="popup__input-error avatar-input-error"></span>
-                    <button className="popup__save-button popup__save-button_inactive" type="submit">Сохранить</button>
+                    <button className="popup__save-button" type="submit">Сохранить</button>
                 </>
             }
         />

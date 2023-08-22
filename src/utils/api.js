@@ -11,7 +11,7 @@ class Api {
         return Promise.reject(`Произошла ошибка: ${response.status}`)
     }
 
-    getPromiseInfo() {
+    getProfileAndCards() {
         return Promise.all([this.getUserInfo(), this.getInitialCards()])
     }
 
@@ -38,6 +38,7 @@ class Api {
                 about: about
             })
         })
+            .then(this._getResponseInfo)
     }
 
     addNewCard(formItems) {
